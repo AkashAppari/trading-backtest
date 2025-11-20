@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trading Signal Backtester</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="background">
+        <canvas id="tradingChart"></canvas>
+        <div class="grid-overlay"></div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <header>
+            <h1>📈 Trading Signal Backtester</h1>
+            <p>Test your trading strategies with historical data</p>
+        </header>
+
+        <div class="main-content">
+            <!-- File Upload Section -->
+            <div class="upload-section">
+                <div class="upload-card">
+                    <h2>📊 Signal File</h2>
+                    <div class="file-upload-area" id="signalUploadArea">
+                        <input type="file" id="signalFile" accept=".csv,.xlsx,.xls" hidden>
+                        <label for="signalFile" class="upload-label">
+                            <span class="upload-icon">📁</span>
+                            <span class="upload-text">Click to upload or drag & drop</span>
+                            <span class="upload-hint">CSV or Excel files</span>
+                        </label>
+                    </div>
+                    <div id="signalInfo" class="file-info"></div>
+                </div>
+
+                <div class="upload-card">
+                    <h2>📈 Market Data File</h2>
+                    <div class="file-upload-area" id="marketUploadArea">
+                        <input type="file" id="marketFile" accept=".csv,.xlsx,.xls" hidden>
+                        <label for="marketFile" class="upload-label">
+                            <span class="upload-icon">📁</span>
+                            <span class="upload-text">Click to upload or drag & drop</span>
+                            <span class="upload-hint">CSV or Excel files</span>
+                        </label>
+                    </div>
+                    <div id="marketInfo" class="file-info"></div>
+                </div>
+            </div>
+
+            <!-- Settings Section -->
+            <div class="settings-section">
+                <label for="timeWindow">
+                    Time Window (seconds):
+                    <span class="tooltip-icon" data-tooltip="Time window allows signals and prices to match even if they're slightly apart in time. 0 = exact match only. Higher values allow matching within that many seconds.">❓</span>
+                </label>
+                <input type="number" id="timeWindow" min="0" max="3600" value="0" step="1">
+            </div>
+
+            <!-- Run Button -->
+            <button id="runBacktest" class="run-button" disabled>
+                <span>🚀 Run Backtest</span>
+            </button>
+
+            <!-- Loading Indicator -->
+            <div id="loading" class="loading hidden">
+                <div class="spinner"></div>
+                <p>Running backtest...</p>
+            </div>
+
+            <!-- Results Section -->
+            <div id="results" class="results hidden">
+                <h2>📊 Results</h2>
+                
+                <!-- Metrics Cards -->
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-label">Total P&L</div>
+                        <div class="metric-value" id="totalPnl">$0.00</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Win Rate</div>
+                        <div class="metric-value" id="winRate">0%</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Total Trades</div>
+                        <div class="metric-value" id="totalTrades">0</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Max Drawdown</div>
+                        <div class="metric-value" id="maxDrawdown">0%</div>
+                    </div>
+                </div>
+
+                <!-- Charts -->
+                <div class="charts-section">
+                    <div id="equityChart" class="chart-container"></div>
+                    <div id="drawdownChart" class="chart-container"></div>
+                    <div id="tradeHistogram" class="chart-container"></div>
+                </div>
+
+                <!-- Trades Table -->
+                <div class="trades-section">
+                    <h3>Trade History</h3>
+                    <div class="table-container">
+                        <table id="tradesTable">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Action</th>
+                                    <th>Entry Price</th>
+                                    <th>Exit Price</th>
+                                    <th>P&L</th>
+                                    <th>Result</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Error Message -->
+            <div id="error" class="error hidden"></div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/background.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
+

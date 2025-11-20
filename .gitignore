@@ -1,34 +1,38 @@
-# dependencies
-/node_modules
-/.pnp
-.pnp.js
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv
 
-# testing
-/coverage
+# Flask
+instance/
+.webassets-cache
 
-# next.js
-/.next/
-/out/
+# Uploads
+uploads/
+*.csv
+*.xlsx
+*.xls
 
-# production
-/build
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
 
-# misc
+# OS
 .DS_Store
-*.pem
+Thumbs.db
 
-# debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+# Jupyter
+.ipynb_checkpoints/
 
-# local env files
-.env*.local
-
-# vercel
-.vercel
-
-# typescript
-*.tsbuildinfo
-next-env.d.ts
-
+# Next.js (old project files)
+.next/
+node_modules/
